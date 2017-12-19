@@ -17,12 +17,8 @@
 default: &default
   adapter: postgresql
   encoding: unicode
-<<<<<<< HEAD
-  
-=======
   username: ivan
   password: 123
->>>>>>> b246c0d102c1f01d215ab5c827b2b7e93c769cdf
   # For details on connection pooling, see Rails configuration guide
   # http://guides.rubyonrails.org/configuring.html#database-pooling
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
@@ -88,4 +84,4 @@ production:
   <<: *default
   database: rsawebv1_production
   username: rsawebv1
-  password: <%= ENV['RSAWEBV1_DATABASE_PASSWORD'] %>
+password: <%= ENV['RSAWEBV1_DATABASE_PASSWORD'] %>
