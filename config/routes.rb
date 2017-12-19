@@ -1,11 +1,11 @@
 Rails.application.routes.draw do
-  resources :rsas
   resources :tweets
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
-	post '/rsa', to: 'rs_as#create'
-	get '/rsa/:id', to: 'rs_as#show'
+  resources :rs_as
 
-	post '/rsa/:id/encrypt_messages', to: 'tweets#create'
-	get '/rsa/:id/encrypt_messages/:mid', to: 'tweets#show'
-	post '/rsa/:id/decrypt_messages', to: 'tweets#decrypt'
+  post '/rsas' => 'rs_as#new'
+  get '/rsas/:id' => 'rs_as#show'
+  post '/rsas/:id/encrypt_messages' => 'tweets#new'
+  get '/rsas/:id/encrypt_messages/:msgid' => 'tweets#show'
+  post '/rsas/:id/decrypt_messages' => 'tweets#decrypt'
+  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

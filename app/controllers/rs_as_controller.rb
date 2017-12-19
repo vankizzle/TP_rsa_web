@@ -11,7 +11,7 @@ class RsAsController < ApplicationController
   # GET /rsas/1.json
   def show
 	rsa = Rsas.find_by id: params[:id]
-	render json {'n' => rsa.n,'e' => rsa.e,'d'=> rsa.d}
+	render json: {n: @rsa.n, e: @rsa.e, d: @rsa.d}
   end
 
   # GET /rsas/new
@@ -26,9 +26,9 @@ class RsAsController < ApplicationController
   # POST /rsas
   # POST /rsas.json
   def create
-    if(params.has_key?(:n) && params.has_key?(:e) && params.has_key?(:d))
-			rsa@ = Rsas.new(n: params[:n],e: params[:e],d: params[:d])
-		else
+    if(params.has_key?(:n) && params.has_key?(:e) && params.has_key?(:d)) then
+			@rsas = Rsas.new(n: params[:n],e: params[:e],d: params[:d])
+	else
 			key = Array.new
 			num = 1000
 			q = rand(num)
@@ -36,7 +36,7 @@ class RsAsController < ApplicationController
 			while(1) do 
 				q = rand(num)
 				p = rand(num)
-				if Prime.prime?(p) && Prime.prime?(q)
+				if Prime.prime?(p) && Prime.prime?(q) then
 					break
 				end
 			end
@@ -51,24 +51,18 @@ class RsAsController < ApplicationController
 					break
 				end
 			end
-			d = 1
-			while((d*e)%fiofn !=)
-				d = d + 1
-			end
+			k = 2
+	 		d = 1 + (k*fiofn)/e
+	
 			key[0] = n
 			key[1] = e
 			key[2] = d
 		
-			@rsa = Rsas.new(n:key[0],e:key[1],d:key[2])
+			@rsas = Rsas.new(n:key[0],e:key[1],d:key[2])
+			@rsas.save
 	
 		end
-
-		respond_to do |format|
-			if @rsas.save
-				format.json { render json {'id' => @rsas.id} }
-			end
-		end
-    end
+    
   end
 
   # PATCH/PUT /rsas/1

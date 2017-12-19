@@ -10,11 +10,13 @@ class RsAsController < ApplicationController
   # GET /rsas/1
   # GET /rsas/1.json
   def show
+	rsa = Rsas.find_by id: params[:id]
+	render json: {n: @rsa.n, e: @rsa.e, d: @rsa.d}
   end
 
   # GET /rsas/new
   def new
-    @rsa = Rsas.new
+    @rsas = Rsas.new
   end
 
   # GET /rsas/1/edit
@@ -24,17 +26,42 @@ class RsAsController < ApplicationController
   # POST /rsas
   # POST /rsas.json
   def create
-    @rsa = Rsas.new(rsa_params)
-
-    respond_to do |format|
-      if @rsa.save
-        format.html { redirect_to @rsa, notice: 'Rsas was successfully created.' }
-        format.json { render :show, status: :created, location: @rsa }
-      else
-        format.html { render :new }
-        format.json { render json: @rsa.errors, status: :unprocessable_entity }
-      end
-    end
+    if(params.has_key?(:n) && params.has_key?(:e) && params.has_key?(:d)) then
+			@rsas = Rsas.new(n: params[:n],e: params[:e],d: params[:d])
+	else
+			key = Array.new
+			num = 1000
+			q = rand(num)
+			p = rand(num)
+			while(1) do 
+				q = rand(num)
+				p = rand(num)
+				if Prime.prime?(p) && Prime.prime?(q) then
+					break
+				end
+			end
+		
+			n = p*q
+			fiofn = (p-1)*(q-1)
+			e = rand(num)
+		
+			while(1) do
+				e = rand(num)
+				if e != Prime.prime_division(n) && 1 < e && e < fiofn then
+					break
+				end
+			end
+			k = 2
+	 		d = 1 + (k*fiofn)/e
+	
+			key[0] = n
+			key[1] = e
+			key[2] = d
+		
+			@rsas = Rsas.new(n:key[0],e:key[1],d:key[2])
+	
+		end
+    
   end
 
   # PATCH/PUT /rsas/1
@@ -69,6 +96,6 @@ class RsAsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def rsa_params
-      params.fetch(:rsa, {})
+     params.require(:rsas).permit(:n, :e, :d)
     end
 end
