@@ -1,0 +1,2 @@
+class Rsas < ApplicationRecord
+end
