@@ -16,16 +16,11 @@ ActiveRecord::Schema.define(version: 20171219195111) do
   enable_extension "plpgsql"
 
   create_table "rsas", force: :cascade do |t|
-    t.integer "rsaid"
-    t.text "message"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
   create_table "tweets", force: :cascade do |t|
-    t.integer "d"
-    t.integer "e"
-    t.integer "n"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
